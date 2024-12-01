@@ -7,16 +7,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
 
     $passwordHash = hash('sha256', $password);
+    $activationToken = bin2hex(random_bytes(16));
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO users (Login, Password, Email) VALUES (:username, :password, :email)");
+        $stmt = $pdo->prepare("INSERT INTO users (Login, Password, Email, IsActive, ActivationToken) VALUES (:username, :password, :email, 0, :token)");
         $stmt->execute([
             'username' => $username,
             'password' => $passwordHash,
             'email' => $email,
+            'token' => $activationToken,
         ]);
 
-        echo "Регистрация успешна!";
+        $activationLink = "http://" . $_SERVER['HTTP_HOST'] . "/?page=activate&token=" . $activationToken;
+        echo "Регистрация успешна! Пожалуйста, активируйте аккаунт по <a href='$activationLink'>ссылке</a>.";
     } catch (PDOException $e) {
         echo "Ошибка: " . $e->getMessage();
     }

@@ -1,5 +1,5 @@
 <?php
-$host = '127.127.126.50';
+$host = '';
 $dbname = 'lab2_db';
 $user = 'root';
 $password = '';

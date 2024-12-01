@@ -12,8 +12,13 @@ switch ($page) {
         require 'login.php';
         break;
 
+    case 'activate':
+        require 'activate.php';
+        break;
+
     default:
-        echo "<h1>Добро пожаловать на наш сайт!</h1>";
+        echo "<h1>Добро пожаловать на мой сайт!</h1>";
         echo "<p><a href='?page=register'>Регистрация</a> |
                  <a href='?page=login'>Авторизация</a></p>";
 }
+?>

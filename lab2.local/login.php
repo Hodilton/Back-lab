@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $passwordHash = hash('sha256', $password);
 
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE Login = :username AND Password = :password");
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE Login = :username AND Password = :password AND IsActive = 1");
     $stmt->execute([
         'username' => $username,
         'password' => $passwordHash,
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->rowCount() > 0) {
         echo "Авторизация успешна!";
     } else {
-        echo "Неверный логин или пароль.";
+        echo "Неверный логин, пароль или аккаунт не активирован.";
     }
 }
 ?>
